@@ -1,0 +1,44 @@
+<div class="employee-crud">
+  <form (ngSubmit)="addOrUpdate()" #empForm="ngForm" class="emp-form">
+    <div class="row">
+      <label for="name">Name</label>
+      <input id="name" name="name" type="text" [(ngModel)]="form.name" required />
+    </div>
+    <div class="row">
+      <label for="empId">Emp ID</label>
+      <input id="empId" name="empId" type="text" [(ngModel)]="form.empId" required />
+    </div>
+    <div class="actions">
+      <button type="submit" [disabled]="!empForm.form.valid">{{ editIndex === null ? 'Add' : 'Update' }}</button>
+      <button type="button" (click)="cancelEdit()" *ngIf="editIndex !== null">Cancel</button>
+    </div>
+  </form>
+
+  <div class="grid" *ngIf="employees.length; else emptyState">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Emp ID</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of employees; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ e.name }}</td>
+          <td>{{ e.empId }}</td>
+          <td>
+            <button type="button" (click)="edit(i)">Edit</button>
+            <button type="button" (click)="remove(i)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #emptyState>
+    <p>No employees yet. Add one above.</p>
+  </ng-template>
+</div>
